@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 function HideOnScroll({ children }) {
   const trigger = useScrollTrigger({ disableHysteresis: true });
@@ -55,10 +56,12 @@ Cras justo odio, dapibus ac facilisis in, egestas eget quam.`,
           sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
           noValidate
           autoComplete="off"
-          onSubmit={handleSubmit}
           onChange={(event) => setText(event.target.value)}
         >
           <TextField id="outlined-basic" label="Input field" variant="outlined" />
+          <Button variant="outlined" onClick={handleSubmit}>
+            Send data
+            </Button>
         </Box>
       </Container>
     </>
