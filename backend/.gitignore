@@ -36,7 +36,7 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env
+# .env - preserved for learning purposes, but should not be used in production
 .env.development.local
 .env.test.local
 .env.production.local
