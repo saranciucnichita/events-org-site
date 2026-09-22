@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# TypeScript build cache
+*.tsbuildinfo
+
 # Logs
 logs
 *.log
@@ -36,7 +39,7 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # dotenv environment variable files
-# .env - preserved for learning purposes, but should not be used in production
+# .env - preserved for learning purposees
 .env.development.local
 .env.test.local
 .env.production.local
