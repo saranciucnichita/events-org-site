@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import CustomizedSnackbar from '@/app/components/SnackComponent';
+import CustomizedSnackbar from '@/app/(main)/components/SnackComponent';
 import CssBaseline from '@mui/material/CssBaseline';
 import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRouter } from 'next/navigation';
 
 const theme = createTheme({
   palette: {
@@ -19,6 +20,8 @@ const theme = createTheme({
 });
 
 export default function UserForm() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [authButton, setAuthButton] = useState(true);
@@ -48,10 +51,12 @@ export default function UserForm() {
       else {
         console.error('Unspecified error occured: ', response);
         setSnackbarOpen(true);
+        router.push('/home');
       }
     } catch (error) {
       console.error('Error sending data: ', error);
       setSnackbarOpen(true);
+      router.push('/home');
     }
   };
 
