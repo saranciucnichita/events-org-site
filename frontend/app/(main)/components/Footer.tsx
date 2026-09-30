@@ -14,7 +14,6 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import EmailIcon from '@mui/icons-material/Email';
-import { useRouter } from 'next/navigation';
 
 const dark = createTheme({
     palette: {
@@ -23,42 +22,47 @@ const dark = createTheme({
 });
 
 export default function Footer() {
-    const router = useRouter();
     const footerLinks = [
-    { label: 'Promo', url: '/promotions' },
-    { label: 'Contest', url: '/contests' },
-    { label: 'Delivery', url: '/shipping' },
-    { label: 'Policy', url: '/policy' },
-    { label: 'QA', url: '/qa' },
-];
+        { label: 'Promo', url: '/promotions' },
+        { label: 'Contest', url: '/contests' },
+        { label: 'Delivery', url: '/shipping' },
+        { label: 'Policy', url: '/policy' },
+        { label: 'QA', url: '/qa' },
+    ];
+
     return (
         <>
+            <Box
+                sx={{
+                    background: 'linear-gradient(to bottom, #ffffff, #fafafa)',
+                    height: '50px',
+                }}
+            />
             <Stack direction={{ xs: 'column', sm: 'row' }}
-                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "common.black" }}>
-                <Box sx={{ display: 'grid', color: 'inherit', justifyItems: 'start', gap: 2, p: { xs: 1, md: 2, lg: 2 } }}>
-                    <Typography variant="h5" component="div" sx={{ color: "common.white" }}>
+                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "primary.main" }}>
+                <Box sx={{ display: 'grid', justifyItems: 'start', gap: 2, p: { xs: 1, md: 2, lg: 2 } }}>
+                    <Typography variant="h5" component="div">
                         News
                     </Typography>
                     {footerLinks.map((item) => (
-                        <Link key={item.label} href={item.url} underline="hover" color="common.white" variant="subtitle2">
+                        <Link key={item.label} href={item.url} underline="hover" color="common.black" variant="subtitle2">
                             {item.label}
                         </Link>
                     ))}
                 </Box>
                 <Divider orientation="vertical" variant="middle" sx={{ borderColor: "common.white" }} flexItem />
                 <Box sx={{
-                    display: 'grid', color: 'common.white', p: { xs: 1, md: 2, lg: 2 },
+                    display: 'grid', p: { xs: 1, md: 2, lg: 2 },
                     gap: 1
                 }}>
                     <Typography variant="h5" component="div" sx={{ mb: 0 }}>
                         Message
                     </Typography>
                     <Typography variant="caption" component="div" sx={{ mb: 1 }}>
-                        Monthly                        <EmailIcon sx={{ paddingLeft: 1 }} />
+                        Monthly
+                        <EmailIcon sx={{ paddingLeft: 1 }} />
                     </Typography>
-                    <ThemeProvider theme={dark}>
-                        <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{ input: { color: 'common.white' } }} />
-                    </ThemeProvider>
+                    <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{ input: { color: 'common.white' } }} />
                 </Box>
             </Stack>
 
@@ -72,15 +76,15 @@ export default function Footer() {
                     color: '#f68859',
                 }}
             >
-                <Container sx={{ backgroundColor: "common.black" }}>
+                <Container sx={{ backgroundColor: "inherit" }}>
                     <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
-                        <IconButton color="inherit" aria-label="twitter" onClick={() => router.push('https://x.com/electroshop')}>
+                        <IconButton color="inherit" aria-label="twitter" href='https://x.com/electroshop'>
                             <TwitterIcon />
                         </IconButton>
-                        <IconButton color="inherit" aria-label="instagram" onClick={() => router.push('https://www.instagram.com/electroshop')}>
+                        <IconButton color="inherit" aria-label="instagram" href='https://www.instagram.com/electroshop'>
                             <InstagramIcon />
                         </IconButton>
-                        <IconButton color="inherit" aria-label="facebook" onClick={() => router.push('https://www.facebook.com/electroshop')}>
+                        <IconButton color="inherit" aria-label="facebook" href="https://www.facebook.com/electroshop">
                             <FacebookIcon />
                         </IconButton>
                     </Stack>
