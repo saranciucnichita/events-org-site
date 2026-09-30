@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import Footer from '../components/Footer';
 
 interface Props {
   children: React.ReactElement;
@@ -76,6 +77,7 @@ Cras justo odio, dapibus ac facilisis in, egestas eget quam.`,
           <TextField id="outlined-basic" label="Input field" variant="outlined" />
         </Box>
       </Container>
+      <Footer />
     </>
   );
 }
