@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 
 import IconButton from '@mui/material/IconButton';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import EmailIcon from '@mui/icons-material/Email';
@@ -34,12 +34,12 @@ export default function Footer() {
         <>
             <Box
                 sx={{
-                    background: 'linear-gradient(to bottom, #ffffff, #fafafa)',
+                    background: 'linear-gradient(to bottom, #ffffff, #f3e5f5)',
                     height: '50px',
                 }}
             />
             <Stack direction={{ xs: 'column', sm: 'row' }}
-                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "primary.main" }}>
+                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "#f3e5f5" }}>
                 <Box sx={{ display: 'grid', justifyItems: 'start', gap: 2, p: { xs: 1, md: 2, lg: 2 } }}>
                     <Typography variant="h5" component="div">
                         News
@@ -50,7 +50,7 @@ export default function Footer() {
                         </Link>
                     ))}
                 </Box>
-                <Divider orientation="vertical" variant="middle" sx={{ borderColor: "common.white" }} flexItem />
+                <Divider orientation="vertical" variant="middle" sx={{ borderColor: "#673ab7" }} flexItem />
                 <Box sx={{
                     display: 'grid', p: { xs: 1, md: 2, lg: 2 },
                     gap: 1
@@ -62,29 +62,35 @@ export default function Footer() {
                         Monthly
                         <EmailIcon sx={{ paddingLeft: 1 }} />
                     </Typography>
-                    <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{ input: { color: 'common.white' } }} />
+                    <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{ input: { color: 'common.black' } }} />
                 </Box>
             </Stack>
 
+            <Box
+                sx={{
+                    background: 'linear-gradient(to bottom, #f3e5f5, #f0ddf3)',
+                    height: '30px',
+                }}
+            />
             <Box
                 component="footer"
                 sx={{
                     py: 1,
                     px: 1,
                     my: 0,
-                    backgroundColor: 'common.black',
-                    color: '#f68859',
+                    backgroundColor: '#f0ddf3',
+                    color: 'common.black',
                 }}
             >
                 <Container sx={{ backgroundColor: "inherit" }}>
                     <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
-                        <IconButton color="inherit" aria-label="twitter" href='https://x.com/electroshop'>
-                            <TwitterIcon />
+                        <IconButton color="inherit" aria-label="twitter" href='https://x.com/event'>
+                            <XIcon />
                         </IconButton>
-                        <IconButton color="inherit" aria-label="instagram" href='https://www.instagram.com/electroshop'>
+                        <IconButton color="inherit" aria-label="instagram" href='https://www.instagram.com/event'>
                             <InstagramIcon />
                         </IconButton>
-                        <IconButton color="inherit" aria-label="facebook" href="https://www.facebook.com/electroshop">
+                        <IconButton color="inherit" aria-label="facebook" href="https://www.facebook.com/event">
                             <FacebookIcon />
                         </IconButton>
                     </Stack>
@@ -98,43 +104,11 @@ export default function Footer() {
                             EVENT
                         </Link>{' '}
                         {'2026'}
+
+                        <div>Fonts made from <a href="http://www.onlinewebfonts.com">Web Fonts</a> is licensed by CC BY 4.0</div>
                     </Typography>
                 </Container>
             </Box>
         </>
     );
 }
-
-{/* import React from 'react';
-import { Box, Container, Typography, Link } from '@mui/material';
-
-export default function Footer() {
-  return (
-    <Box
-      component="footer"
-      sx={{
-        py: 3,
-        px: 2,
-        mt: 'auto',
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light'
-            ? theme.palette.grey[200]
-            : theme.palette.grey[800],
-      }}
-    >
-      <Container maxWidth="sm">
-        <Typography variant="body1" align="center">
-          My Website Footer
-        </Typography>
-        <Typography variant="body2" color="text.secondary" align="center">
-          {'Copyright © '}
-          <Link color="inherit" href="https://yourwebsite.com">
-            Your Website
-          </Link>{' '}
-          {new Date().getFullYear()}
-        </Typography>
-      </Container>
-    </Box>
-  );
-}
-*/}

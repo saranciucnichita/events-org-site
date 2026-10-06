@@ -11,6 +11,7 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import Footer from '../components/Footer';
+import Image from 'next/image'
 
 interface Props {
   children: React.ReactElement;
@@ -27,7 +28,7 @@ const CustomAppBar = styled(AppBar)`
 `;
 
 function HideOnScroll({ children } : Props) {
-  const trigger = true; /* useScrollTrigger({ disableHysteresis: true }); */
+  const trigger = useScrollTrigger({ disableHysteresis: true });
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>
@@ -58,7 +59,24 @@ export default function HideAppBar() {
       </HideOnScroll>
       <Toolbar />
       <Container>
-        <Box sx={{ my: 2 }}>
+        <Image
+      src="/event1.jpg"
+      width={500}
+      height={500}
+      alt="Picture of the author"
+                style={{
+            objectFit: "cover",
+            borderRadius: "10px",
+            margin: "auto",
+          }}
+    />
+    <Box sx={{ my: 2 }}>
+           <Typography className="font-futura" variant="h5" component="div">
+                        EVENT
+                    </Typography>
+    </Box>
+
+    <Box sx={{ my: 2 }}>
           {[...new Array(12)]
             .map(
               () => `Cras mattis consectetur purus sit amet fermentum.
