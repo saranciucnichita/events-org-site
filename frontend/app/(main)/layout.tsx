@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import localFont from 'next/font/local';
-
-const futurapt = localFont({
-  src: '../../public/futura.woff2',
-  variable: '--font-futura',
-   display: 'swap',
-})
+import { customFont } from '../../src/futura/font';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ro"
-      className={`${geistSans.variable} ${geistMono.variable} ${futurapt.className} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${customFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

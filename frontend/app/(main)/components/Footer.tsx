@@ -34,12 +34,12 @@ export default function Footer() {
         <>
             <Box
                 sx={{
-                    background: 'linear-gradient(to bottom, #ffffff, #f3e5f5)',
+                    background: 'linear-gradient(to bottom, #ffffff, #fceffa)',
                     height: '50px',
                 }}
             />
             <Stack direction={{ xs: 'column', sm: 'row' }}
-                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "#f3e5f5" }}>
+                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "#fceffa" }}>
                 <Box sx={{ display: 'grid', justifyItems: 'start', gap: 2, p: { xs: 1, md: 2, lg: 2 } }}>
                     <Typography variant="h5" component="div">
                         News
@@ -50,7 +50,7 @@ export default function Footer() {
                         </Link>
                     ))}
                 </Box>
-                <Divider orientation="vertical" variant="middle" sx={{ borderColor: "#673ab7" }} flexItem />
+                <Divider orientation="vertical" variant="middle" sx={{ borderColor: "#d1bef1" }} flexItem />
                 <Box sx={{
                     display: 'grid', p: { xs: 1, md: 2, lg: 2 },
                     gap: 1
@@ -68,7 +68,7 @@ export default function Footer() {
 
             <Box
                 sx={{
-                    background: 'linear-gradient(to bottom, #f3e5f5, #f0ddf3)',
+                    background: 'linear-gradient(to bottom, #fceffa, #fae9f8)',
                     height: '30px',
                 }}
             />
@@ -78,7 +78,7 @@ export default function Footer() {
                     py: 1,
                     px: 1,
                     my: 0,
-                    backgroundColor: '#f0ddf3',
+                    backgroundColor: '#fae9f8',
                     color: 'common.black',
                 }}
             >
