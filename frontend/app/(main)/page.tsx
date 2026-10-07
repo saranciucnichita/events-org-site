@@ -23,10 +23,23 @@ import Switch from '@mui/material/Switch';
 import { useRouter } from 'next/navigation';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+
 
 interface Props {
   children: React.ReactElement;
 }
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: (theme.vars ?? theme).palette.text.secondary,
+  ...theme.applyStyles('dark', {
+    backgroundColor: '#1A2027',
+  }),
+}));
 
 const CustomAppBar = styled(AppBar)`
   &.MuiAppBar-root {
@@ -149,21 +162,25 @@ export default function HideAppBar() {
           className="w-auto h-auto"
           loading="eager"
         />
-        <Grid container spacing={2}>
-        <Box sx={{ my: 6 }}>
-          <Typography sx={{ fontFamily: 'var(--font-custom)' }} variant="h3" component="div">
-            EVENT
-            MANAGEMENT
-          </Typography>
-        </Box>
-        <Box>
-          <Typography sx={{ fontFamily: 'var(--font-custom)' }} variant="h3" component="div">
-            Hello. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos fuga molestiae saepe, sequi expedita ea nisi aperiam nam distinctio quisquam eligendi eveniet sed tempora nihil quas obcaecati laudantium ab optio nobis minima veniam vitae beatae illo. Consequuntur inventore eum omnis! Obcaecati quod aliquid facere deleniti ab impedit harum at consectetur magnam voluptate ut maiores libero quibusdam, aspernatur in debitis necessitatibus minima expedita accusamus totam nam ducimus ipsa? Consequatur exercitationem mollitia, ipsam pariatur laborum itaque maiores obcaecati quibusdam nam eum eligendi sed tempora ad vitae architecto quia nemo animi ratione neque iusto dolor! Dignissimos sit cum consequatur officia enim obcaecati odit.
-          </Typography>
-        </Box>
+        <Grid container rowSpacing={1} columnSpacing={2} direction="row" wrap="nowrap" className="pt-8">
+          <Grid size={{ xs: 6 }}>
+            <Item>
+              <Typography sx={{ fontFamily: 'var(--font-custom)' }} variant="h3" component="div">
+                EVENT <br /> MANAGEMENT
+              </Typography>
+            </Item>
+          </Grid>
+
+          <Grid size={{ xs: 6 }} sx={{alignContent: 'center'}}>
+            <Item>
+              <Typography sx={{ fontFamily: 'var(--font-custom)' }} variant="h4" component="div">
+                Urmeaza la noi aici si crea un eveniment de visul tau
+              </Typography>
+            </Item>
+          </Grid>
         </Grid>
 
-<Divider />
+        <Divider className="py-8" />
 
         <Box sx={{ my: 2 }}>
           {[...new Array(12)]

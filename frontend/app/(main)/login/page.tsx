@@ -11,6 +11,7 @@ import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Slide from '@mui/material/Slide';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,8 @@ export default function UserForm() {
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [authButton, setAuthButton] = useState(true);
+
+  const [authStatus, setAuthStatus] = useState(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +61,7 @@ export default function UserForm() {
     } catch (error) {
       console.error('Error sending data: ', error);
       setSnackbarOpen(true);
+      setAuthStatus(false); // debugging
       router.refresh();
       router.push('/');
     }
@@ -66,6 +70,10 @@ export default function UserForm() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Slide direction="right" in={authStatus} timeout={{
+          enter: 0,
+          exit: 300,
+        }} mountOnEnter unmountOnExit>
       <Container maxWidth="xs" sx={{
         bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: 10
       }}>
@@ -87,7 +95,6 @@ export default function UserForm() {
           <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
           <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
         </Box>
-
         <CustomizedSnackbar
           open={snackbarOpen}
           message="Înregistrare nu reușit!"
@@ -95,6 +102,7 @@ export default function UserForm() {
           onClose={() => setSnackbarOpen(false)}
         />
       </Container>
+      </Slide>
     </ThemeProvider>
   );
 }
