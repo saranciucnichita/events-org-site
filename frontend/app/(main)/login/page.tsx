@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Slide from '@mui/material/Slide';
+import MailComponent from '../waitcode/page';
 
 const theme = createTheme({
   palette: {
@@ -27,7 +28,7 @@ export default function UserForm() {
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [authButton, setAuthButton] = useState(true);
-
+  const [isMailSent, setMail] = useState(false);
   const [authStatus, setAuthStatus] = useState(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -62,47 +63,48 @@ export default function UserForm() {
       console.error('Error sending data: ', error);
       setSnackbarOpen(true);
       setAuthStatus(false); // debugging
-      router.refresh();
-      router.push('/');
+      setMail(true);
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Slide direction="right" in={authStatus} timeout={{
-          enter: 0,
-          exit: 300,
-        }} mountOnEnter unmountOnExit>
-      <Container maxWidth="xs" sx={{
-        bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: 10
-      }}>
-        <Box component="form" ref={inputRef} onSubmit={handleSubmit} sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-          <Image
-            src="/logo.png"
-            width={300}
-            height={300}
-            alt="Picture of the event promotion"
-            style={{
-              objectFit: "cover",
-              margin: "auto",
-            }}
-            className="w-auto h-auto"
-            loading="eager"
+        {isMailSent ? <MailComponent /> :
+        <Slide direction="right" in={authStatus} timeout={{
+        enter: 0,
+        exit: 300,
+      }} mountOnEnter unmountOnExit>
+        <Container maxWidth="xs" sx={{
+          bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: 10
+        }}>
+          <Box component="form" ref={inputRef} onSubmit={handleSubmit} sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+            <Image
+              src="/logo.png"
+              width={300}
+              height={300}
+              alt="Picture of the event promotion"
+              style={{
+                objectFit: "cover",
+                margin: "auto",
+              }}
+              className="w-auto h-auto"
+              loading="eager"
+            />
+            <Typography variant="h5">Creați cont nou</Typography>
+            <TextField label="Nume" name="name" value={formData.name} onChange={handleChange} required fullWidth />
+            <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
+            <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
+          </Box>
+          <CustomizedSnackbar
+            open={snackbarOpen}
+            message="Înregistrare nu reușit!"
+            severity="error"
+            onClose={() => setSnackbarOpen(false)}
           />
-          <Typography variant="h5">Creați cont nou</Typography>
-          <TextField label="Nume" name="name" value={formData.name} onChange={handleChange} required fullWidth />
-          <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
-          <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
-        </Box>
-        <CustomizedSnackbar
-          open={snackbarOpen}
-          message="Înregistrare nu reușit!"
-          severity="error"
-          onClose={() => setSnackbarOpen(false)}
-        />
-      </Container>
+        </Container>
       </Slide>
+        }
     </ThemeProvider>
   );
 }
