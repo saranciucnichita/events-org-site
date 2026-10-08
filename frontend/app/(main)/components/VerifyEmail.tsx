@@ -13,24 +13,23 @@ function MailSent() {
     const [variant, setVariant] = useState<LinearProgressProps['variant']>("indeterminate");
     const [progress, setProgress] = useState<LinearProgressProps['value']>(100);
     const router = useRouter();
+
     useEffect(() => {
         if (stop) return;
-
         const interval = setInterval(() => {
-            setCount((prevCount) => {
-                if (prevCount === 2) {
-                    setStop(true);
-                    setVariant("determinate");
-                    setProgress(progress);
-                    router.push('/');
-                }
-                return prevCount + 1;
-            });
+            setCount((prevCount) => prevCount + 1);
         }, 1000);
-
         return () => clearInterval(interval);
     }, [stop]);
 
+    useEffect(() => {
+        if (count === 2) {
+            setStop(true);
+            setVariant("determinate");
+            setProgress(progress);
+            router.push('/');
+        }
+    }, [count, router]);
 
     return (
         <Slide direction="left" in={authStatus} timeout={{
@@ -44,7 +43,7 @@ function MailSent() {
                     Confirm your mail. Please follow the link from your inbox.
                     Check the spam folder if needed.
                 </Typography>
-                                <Typography variant='h5' className='py-6'>
+                <Typography variant='h5' className='py-6'>
                     Check the spam folder if needed.
                 </Typography>
                 <LinearProgress aria-label="Loading…" variant={variant} value={progress} />

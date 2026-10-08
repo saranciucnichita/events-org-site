@@ -146,12 +146,11 @@ export default function HideAppBar() {
           </Toolbar>
         </CustomAppBar>
       </HideOnScroll>
-      <Toolbar />
 
       <Container>
         <Image
           src="/event1.jpg"
-          width={500}
+          width={1500}
           height={500}
           alt="Picture of the event promotion"
           style={{
@@ -159,7 +158,7 @@ export default function HideAppBar() {
             borderRadius: "10px",
             margin: "auto",
           }}
-          className="w-auto h-auto"
+          className="h-auto"
           loading="eager"
         />
         <Grid container rowSpacing={1} columnSpacing={2} direction="row" wrap="nowrap" className="pt-8">
@@ -183,12 +182,9 @@ export default function HideAppBar() {
         <Divider className="py-8" />
 
         <Box sx={{ my: 2 }}>
-          {[...new Array(12)]
-            .map(
-              () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.`,
-            )
-            .join('\n')}
+          <Typography>
+We know that organizing an event can be a complex and often tedious process. We therefore offer you our 10 years experience in organizing and hosting events. Our dedicated event managers will be pleased to assist you in coordinating all logistics issues.
+</Typography>
         </Box>
         <Box
           component="form"

@@ -34,12 +34,12 @@ export default function Footer() {
         <>
             <Box
                 sx={{
-                    background: 'linear-gradient(to bottom, #ffffff, #fceffa)',
+                    background: 'linear-gradient(to bottom, #ffffff, #f9f2f8)',
                     height: '50px',
                 }}
             />
             <Stack direction={{ xs: 'column', sm: 'row' }}
-                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "#fceffa" }}>
+                sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "#f9f2f8" }}>
                 <Box sx={{ display: 'grid', justifyItems: 'start', gap: 2, p: { xs: 1, md: 2, lg: 2 } }}>
                     <Typography variant="h5" component="div">
                         News
@@ -68,7 +68,7 @@ export default function Footer() {
 
             <Box
                 sx={{
-                    background: 'linear-gradient(to bottom, #fceffa, #fae9f8)',
+                    background: 'linear-gradient(to bottom, #f9f2f8, #fceffa)',
                     height: '30px',
                 }}
             />
@@ -78,7 +78,7 @@ export default function Footer() {
                     py: 1,
                     px: 1,
                     my: 0,
-                    backgroundColor: '#fae9f8',
+                    backgroundColor: '#fceffa',
                     color: 'common.black',
                 }}
             >

@@ -12,7 +12,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Slide from '@mui/material/Slide';
-import MailComponent from '../waitcode/page';
+import MailComponent from '../components/VerifyEmail';
+import Switch from '@mui/material/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+
 
 const theme = createTheme({
   palette: {
@@ -25,18 +33,28 @@ const theme = createTheme({
 export default function UserForm() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [formData, setFormData] = useState({ username: '', email: '', role: '' });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [authButton, setAuthButton] = useState(true);
   const [isMailSent, setMail] = useState(false);
-  const [authStatus, setAuthStatus] = useState(true);
+  const [slide, setSlide] = useState(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [role, setRole] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (inputRef.current) {
       setAuthButton(!inputRef.current.checkValidity());
     }
+  };
+
+  const handleRole = (event: SelectChangeEvent) => {
+    handleChange(event.target.value as string);
+  };
+
+  const handleToggle = (event) => {
+    setIsVisible(event.target.checked);
   };
 
   const handleSubmit = async (e: React.SubmitEvent) => {
@@ -51,7 +69,9 @@ export default function UserForm() {
 
       if (response.ok) {
         alert('Ați înregistrat cu succes!');
-        setFormData({ name: '', email: '' }); // Clear form
+        setFormData({ username: '', email: '', role: '' }); // Clear form
+        setSlide(false);
+        setMail(true);
       }
       else {
         console.error('Unspecified error occured: ', response);
@@ -62,7 +82,7 @@ export default function UserForm() {
     } catch (error) {
       console.error('Error sending data: ', error);
       setSnackbarOpen(true);
-      setAuthStatus(false); // debugging
+      setSlide(false); // debugging
       setMail(true);
     }
   };
@@ -70,8 +90,7 @@ export default function UserForm() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        {isMailSent ? <MailComponent /> :
-        <Slide direction="right" in={authStatus} timeout={{
+      <Slide direction="right" in={slide} timeout={{
         enter: 0,
         exit: 300,
       }} mountOnEnter unmountOnExit>
@@ -92,8 +111,43 @@ export default function UserForm() {
               loading="eager"
             />
             <Typography variant="h5">Creați cont nou</Typography>
-            <TextField label="Nume" name="name" value={formData.name} onChange={handleChange} required fullWidth />
-            <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
+            <FormGroup>
+
+              <Box sx={{ justifyContent: 'center', '& > .MuiFormControl-root': { py: 1 } }}>
+                <FormControl fullWidth>
+                  <TextField label="Username" name="username" value={formData.username} onChange={handleChange} required fullWidth />
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
+                </FormControl>
+                <FormControl fullWidth>
+                  <FormControlLabel control={<Switch />}
+                    label="Eu sunt un membru a companiei"
+                    checked={isVisible}
+                    onChange={handleToggle}
+                  />
+                </FormControl>
+
+                {isVisible && (
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Funcția</InputLabel>
+                    <Select
+                      name="role"
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={formData.role}
+                      label="User role"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value={'lead'}>Lead Planner</MenuItem>
+                      <MenuItem value={'coord'}>Coordinator</MenuItem>
+                      <MenuItem value={'out'}>Outsource Provider</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              </Box>
+
+            </FormGroup>
             <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
           </Box>
           <CustomizedSnackbar
@@ -104,7 +158,7 @@ export default function UserForm() {
           />
         </Container>
       </Slide>
-        }
+      {isMailSent ? <MailComponent /> : <></>}
     </ThemeProvider>
   );
 }
