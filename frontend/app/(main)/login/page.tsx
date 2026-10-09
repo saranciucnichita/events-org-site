@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent, SubmitEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -20,7 +20,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-
+import { list } from 'postcss';
 
 const theme = createTheme({
   palette: {
@@ -34,15 +34,15 @@ export default function UserForm() {
   const router = useRouter();
 
   const [formData, setFormData] = useState({ username: '', email: '', role: '' });
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [authButton, setAuthButton] = useState(true);
-  const [isMailSent, setMail] = useState(false);
-  const [slide, setSlide] = useState(true);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [authButton, setAuthButton] = useState<boolean>(true);
+  const [isMailSent, setMail] = useState<boolean>(false);
+  const [slide, setSlide] = useState<boolean>(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [role, setRole] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (inputRef.current) {
       setAuthButton(!inputRef.current.checkValidity());
@@ -50,14 +50,14 @@ export default function UserForm() {
   };
 
   const handleRole = (event: SelectChangeEvent) => {
-    handleChange(event.target.value as string);
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleToggle = (event) => {
+  const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsVisible(event.target.checked);
   };
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     setAuthButton(true);
     try {
@@ -121,23 +121,27 @@ export default function UserForm() {
                   <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
                 </FormControl>
                 <FormControl fullWidth>
-                  <FormControlLabel control={<Switch />}
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={isVisible}
+                        onChange={handleToggle}
+                      />
+                    }
                     label="Eu sunt un membru a companiei"
-                    checked={isVisible}
-                    onChange={handleToggle}
                   />
                 </FormControl>
 
                 {isVisible && (
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Funcția</InputLabel>
+                    <InputLabel id="role-select-label">Funcția</InputLabel>
                     <Select
                       name="role"
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
+                      labelId="role-select-label"
+                      id="role-select"
                       value={formData.role}
                       label="User role"
-                      onChange={handleChange}
+                      onChange={handleRole}
                     >
                       <MenuItem value={'lead'}>Lead Planner</MenuItem>
                       <MenuItem value={'coord'}>Coordinator</MenuItem>

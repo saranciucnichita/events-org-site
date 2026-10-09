@@ -7,11 +7,12 @@ import Slide from '@mui/material/Slide';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 
 function MailSent() {
-    const [authStatus, setAuthStatus] = useState(true);
-    const [count, setCount] = useState(0);
-    const [stop, setStop] = useState(false);
-    const [variant, setVariant] = useState<LinearProgressProps['variant']>("indeterminate");
+    const [authStatus, setAuthStatus] = useState<boolean>(true);
+    const [count, setCount] = useState<number>(0);
+    const stop = count === 3;
+    const variant = count === 2 ? "determinate" : "indeterminate";
     const [progress, setProgress] = useState<LinearProgressProps['value']>(100);
+    const progressValue = count === 2 ? progress : 0;
     const router = useRouter();
 
     useEffect(() => {
@@ -23,10 +24,7 @@ function MailSent() {
     }, [stop]);
 
     useEffect(() => {
-        if (count === 2) {
-            setStop(true);
-            setVariant("determinate");
-            setProgress(progress);
+        if (count === 3) {
             router.push('/');
         }
     }, [count, router]);
@@ -46,7 +44,7 @@ function MailSent() {
                 <Typography variant='h5' className='py-6'>
                     Check the spam folder if needed.
                 </Typography>
-                <LinearProgress aria-label="Loading…" variant={variant} value={progress} />
+                <LinearProgress aria-label="Loading…" variant={variant} value={progressValue} />
             </Container>
         </Slide>
     );

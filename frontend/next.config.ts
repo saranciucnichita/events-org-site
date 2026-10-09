@@ -8,10 +8,10 @@ const nextConfig: NextConfig = {
   experimental: {
     // Use the Rust port instead of the Babel transform
     turbopackRustReactCompiler: true,
-    agentUpgrade: 'security',
+    agentUpgrade: 'latest',
     turbopackGc: true,
     turbopackLazyDynamicImports: true,
-    turbopackPluginRuntimeStrategy: 'workerThreads',
+    turbopackPluginRuntimeStrategy: 'forceWorkerThreads',
     agentFeedback: true,
   },
 };
