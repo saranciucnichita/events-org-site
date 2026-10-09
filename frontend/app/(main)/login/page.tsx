@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, ChangeEvent, SubmitEvent } from 'react';
+import { useState, useRef, useId, ChangeEvent, SubmitEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -21,6 +21,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { list } from 'postcss';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 const theme = createTheme({
   palette: {
@@ -33,14 +39,26 @@ const theme = createTheme({
 export default function UserForm() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({ username: '', email: '', role: '' });
+  const outlinedPasswordId = useId();
+
+  const [formData, setFormData] = useState({ username: '', email: '', role: '', password: '' });
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [authButton, setAuthButton] = useState<boolean>(true);
   const [isMailSent, setMail] = useState<boolean>(false);
   const [slide, setSlide] = useState<boolean>(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [role, setRole] = useState('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,6 +68,7 @@ export default function UserForm() {
   };
 
   const handleRole = (event: SelectChangeEvent) => {
+    if (isVisible)
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -69,7 +88,7 @@ export default function UserForm() {
 
       if (response.ok) {
         alert('Ați înregistrat cu succes!');
-        setFormData({ username: '', email: '', role: '' }); // Clear form
+        setFormData({ username: '', email: '', role: '', password: '' }); // Clear form
         setSlide(false);
         setMail(true);
       }
@@ -120,6 +139,34 @@ export default function UserForm() {
                 <FormControl fullWidth>
                   <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
                 </FormControl>
+
+ <FormControl variant="outlined" fullWidth>
+          <InputLabel required htmlFor={`${outlinedPasswordId}-input`}>Password</InputLabel>
+          <OutlinedInput
+            id={`${outlinedPasswordId}-input`}
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label={
+                    showPassword ? 'hide the password' : 'display the password'
+                  }
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onMouseUp={handleMouseUpPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            value={formData.password}
+            name="password"
+            onChange={handleChange}
+          />
+        </FormControl>
+
                 <FormControl fullWidth>
                   <FormControlLabel
                     control={
