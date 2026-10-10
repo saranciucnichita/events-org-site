@@ -5,11 +5,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import CustomizedSnackbar from '@/app/(main)/components/SnackComponent';
 import CssBaseline from '@mui/material/CssBaseline';
 import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Slide from '@mui/material/Slide';
 import MailComponent from '../components/VerifyEmail';
@@ -20,13 +18,11 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import { list } from 'postcss';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 
 const theme = createTheme({
   palette: {
@@ -37,14 +33,12 @@ const theme = createTheme({
 });
 
 export default function UserForm() {
-  const router = useRouter();
-
   const outlinedPasswordId = useId();
 
   const [formData, setFormData] = useState({ username: '', email: '', role: '', password: '' });
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [authButton, setAuthButton] = useState<boolean>(true);
   const [isMailSent, setMail] = useState<boolean>(false);
+  const [isMailVerified, Verify] = useState<boolean>(false);
   const [slide, setSlide] = useState<boolean>(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -79,6 +73,14 @@ export default function UserForm() {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     setAuthButton(true);
+    setSlide(false);
+    setMail(true);
+  };
+
+/*
+const handleSubmit = async (e: SubmitEvent) => {
+    e.preventDefault();
+    setAuthButton(true);
     try {
       const response = await fetch('http://localhost:4000/user', {
         method: 'POST',
@@ -89,8 +91,6 @@ export default function UserForm() {
       if (response.ok) {
         alert('Ați înregistrat cu succes!');
         setFormData({ username: '', email: '', role: '', password: '' }); // Clear form
-        setSlide(false);
-        setMail(true);
       }
       else {
         console.error('Unspecified error occured: ', response);
@@ -100,11 +100,12 @@ export default function UserForm() {
       }
     } catch (error) {
       console.error('Error sending data: ', error);
-      setSnackbarOpen(true);
+      setSnackbarOpen(true); // alert
       setSlide(false); // debugging
       setMail(true);
     }
   };
+*/
 
   return (
     <ThemeProvider theme={theme}>
@@ -164,6 +165,7 @@ export default function UserForm() {
             value={formData.password}
             name="password"
             onChange={handleChange}
+            required
           />
         </FormControl>
 
@@ -201,15 +203,9 @@ export default function UserForm() {
             </FormGroup>
             <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
           </Box>
-          <CustomizedSnackbar
-            open={snackbarOpen}
-            message="Înregistrare nu reușit!"
-            severity="error"
-            onClose={() => setSnackbarOpen(false)}
-          />
         </Container>
       </Slide>
-      {isMailSent ? <MailComponent /> : <></>}
+      {isMailSent ? <MailComponent nextstep={Verify} formData={formData}/> : <></>}
     </ThemeProvider>
   );
 }

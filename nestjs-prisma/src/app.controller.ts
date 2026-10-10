@@ -9,50 +9,31 @@ export class AppController {
   ) {}
 
   @Get("user/:id")
-  async getPostById(@Param("id") id: string): Promise<UserModel | null> {
+  async getUserById(@Param("id") id: string): Promise<UserModel | null> {
     return this.UserService.user({ id: Number(id) });
   }
 
   @Get("users")
-  async getPublishedPosts(): Promise<UserModel[]> {
+  async getPublishedUsers(): Promise<UserModel[]> {
     return this.UserService.users({});
   }
 
   @Get("filtered-users/:searchString")
-  async getFilteredPosts(@Param("searchString") searchString: string): Promise<UserModel[]> {
+  async getFilteredUsers(@Param("searchString") searchString: string): Promise<UserModel[]> {
     return this.UserService.users({
       where: {
-        OR: [
-          {
             username: { contains: searchString },
-          },
-          {
-            email: { contains: searchString },
-          },
-        ],
       },
     });
   }
 
-  @Post("post")
-  async createDraft(
-    @Body() userData: { username: string; email: string; role?: string },
-  ): Promise<UserModel> {
-    const { username, email, role } = userData;
-    return this.UserService.createUser({
-      username,
-      email,
-      role,
-    });
-  }
-
   @Post("user")
-  async signupUser(@Body() userData: { username: string; email: string, role?: string }): Promise<UserModel> {
+  async signupUser(@Body() userData: { username: string; email: string, role?: string, password: string }): Promise<UserModel> {
     return this.UserService.createUser(userData);
   }
 
   @Delete("user/:id")
-  async deletePost(@Param("id") id: string): Promise<UserModel> {
+  async deleteUser(@Param("id") id: string): Promise<UserModel> {
     return this.UserService.deleteUser({ id: Number(id) });
   }
 }

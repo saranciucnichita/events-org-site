@@ -5,8 +5,41 @@ import Container from '@mui/material/Container';
 import { useRouter } from 'next/navigation';
 import Slide from '@mui/material/Slide';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import { registerUser } from '../../actions';
+import CustomizedSnackbar from '@/app/(main)/components/SnackComponent';
 
-function MailSent() {
+interface MailComponentProps {
+    nextstep: React.Dispatch<React.SetStateAction<boolean>>;
+    formData: {
+        username: string;
+        email: string;
+        role: string;
+        password: string;
+    };
+}
+
+export default function MailComponent({ nextstep, formData }: MailComponentProps) {
+    const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        // Executăm funcția care rulează securizat pe server
+        console.log('Sending data: ', formData);
+        const result = await registerUser(formData);
+        if (result.success) {
+            alert('Ați înregistrat cu succes!');
+        } else {
+            // Aici gestionezi toate stările de eroare pe client în funcție de răspuns
+            setSnackbarOpen(true);
+            if (result.error === 'Unspecified error occurred') {
+                router.refresh();
+                router.push('/');
+            }/* else {
+      setSlide(false); // debugging
+      setMail(true);
+    } */
+        }
+    };
+
     const [authStatus, setAuthStatus] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const stop = count === 3;
@@ -25,9 +58,10 @@ function MailSent() {
 
     useEffect(() => {
         if (count === 3) {
-            router.push('/');
+            nextstep(true);
+            handleSubmit({ preventDefault: () => { } } as React.SubmitEvent<HTMLFormElement>);
         }
-    }, [count, router]);
+    }, [count]);
 
     return (
         <Slide direction="left" in={authStatus} timeout={{
@@ -39,19 +73,18 @@ function MailSent() {
             }}>
                 <Typography variant='h5' className='py-6'>
                     Confirm your mail. Please follow the link from your inbox.
-                    Check the spam folder if needed.
                 </Typography>
-                <Typography variant='h5' className='py-6'>
+                <Typography variant='h6' className='py-6'>
                     Check the spam folder if needed.
                 </Typography>
                 <LinearProgress aria-label="Loading…" variant={variant} value={progressValue} />
+                <CustomizedSnackbar
+                    open={snackbarOpen}
+                    message="Înregistrare nu reușit!"
+                    severity="error"
+                    onClose={() => setSnackbarOpen(false)}
+                />
             </Container>
         </Slide>
-    );
-}
-
-export default function MailComponent() {
-    return (
-        <MailSent />
     );
 }
