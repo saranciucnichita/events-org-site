@@ -1,5 +1,5 @@
 "use client";
-import { useState, ReactNode } from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,7 +13,6 @@ import { styled } from '@mui/material/styles';
 import Footer from '../(main)/components/Footer';
 import Image from 'next/image';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -88,7 +87,7 @@ export default function HideAppBar() {
 
   const redirectLogin = () => {
     setAnchorEl(null);
-    router.push('/login');
+    router.push('/register');
   };
 
   return (

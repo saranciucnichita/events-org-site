@@ -1,11 +1,17 @@
 import { Controller, Get, Param, Post, Body, Put, Delete } from "@nestjs/common";
 import { UserService } from "./user.service.js";
 import { User as UserModel } from "./generated/prisma/client.js";
+import { UseGuards } from "@nestjs/common";
+import { Request, UnauthorizedException } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { AuthService } from "./auth.service.js";
+import { hash } from 'bcrypt';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly UserService: UserService,
+    private readonly AuthService: AuthService,
   ) {}
 
   @Get("user/:id")
@@ -27,13 +33,42 @@ export class AppController {
     });
   }
 
-  @Post("user")
-  async signupUser(@Body() userData: { username: string; email: string, role?: string, password: string }): Promise<UserModel> {
-    return this.UserService.createUser(userData);
-  }
-
   @Delete("user/:id")
   async deleteUser(@Param("id") id: string): Promise<UserModel> {
     return this.UserService.deleteUser({ id: Number(id) });
+  }
+
+   @Post("auth/login")
+  async login(@Body() loginData: { username: string; pass: string }) {
+    const user = await this.AuthService.validateUser(loginData.username, loginData.pass);
+    if (!user) {
+      throw new UnauthorizedException('Date de autentificare invalide');
+    }
+    return this.AuthService.login(user);
+  }
+
+  @Post("user")
+  async signupUser(@Body() userData: { username: string; email: string, role?: string, password: string }): Promise<any> {
+  const saltRounds = 10;
+  const hashedPassword = await hash(userData.password, saltRounds);
+
+  const newUser = await this.UserService.createUser({
+    ...userData,
+    password: hashedPassword,
+  });
+
+  return this.AuthService.login(newUser); 
+}
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  async getProfile(@Request() req: any) {
+    const userId = req.user.userId; 
+    
+    const user = await this.UserService.user({ id: Number(userId) });
+    if (user) {
+      delete (user as any).password;
+    }
+    return user;
   }
 }

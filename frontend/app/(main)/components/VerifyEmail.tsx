@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SubmitEvent, Dispatch, SyntheticEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useRouter } from 'next/navigation';
@@ -7,9 +7,10 @@ import Slide from '@mui/material/Slide';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import { registerUser } from '../../actions';
 import CustomizedSnackbar from '@/app/(main)/components/SnackComponent';
+import { redirect } from 'next/navigation';
 
 interface MailComponentProps {
-    nextstep: React.Dispatch<React.SetStateAction<boolean>>;
+    nextstep: Dispatch<React.SetStateAction<boolean>>;
     formData: {
         username: string;
         email: string;
@@ -20,15 +21,13 @@ interface MailComponentProps {
 
 export default function MailComponent({ nextstep, formData }: MailComponentProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-    const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Executăm funcția care rulează securizat pe server
         console.log('Sending data: ', formData);
         const result = await registerUser(formData);
         if (result.success) {
-            alert('Ați înregistrat cu succes!');
+            redirect('/dashboard');
         } else {
-            // Aici gestionezi toate stările de eroare pe client în funcție de răspuns
             setSnackbarOpen(true);
             if (result.error === 'Unspecified error occurred') {
                 router.refresh();
@@ -59,7 +58,7 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
     useEffect(() => {
         if (count === 3) {
             nextstep(true);
-            handleSubmit({ preventDefault: () => { } } as React.SubmitEvent<HTMLFormElement>);
+            handleSubmit({ preventDefault: () => { } } as SubmitEvent<HTMLFormElement>);
         }
     }, [count]);
 

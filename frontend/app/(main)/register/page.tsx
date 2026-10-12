@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useId, ChangeEvent, SubmitEvent } from 'react';
+import { useState, useRef, useId, ChangeEvent, SubmitEvent, MouseEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -46,11 +46,11 @@ export default function UserForm() {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
-  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseUpPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -66,7 +66,7 @@ export default function UserForm() {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
     setIsVisible(event.target.checked);
   };
 
