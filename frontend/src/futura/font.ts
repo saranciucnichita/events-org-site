@@ -1,9 +1,7 @@
 import localFont from 'next/font/local';
 
-
-export const customFont = localFont({
+export const futura = localFont({
   src: './futura.woff2',
-  weight: '400',
   style: 'normal',
-  variable: '--font-custom',
+  variable: '--font-futura',
 });

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { customFont } from '../../src/futura/font';
+import { futura } from '../../src/futura/font';
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 
 const geistSans = Geist({
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ro"
-      className={`${geistSans.variable} ${geistMono.variable} ${customFont.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${futura.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <AppRouterCacheProvider>

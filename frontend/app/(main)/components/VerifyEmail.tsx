@@ -21,8 +21,8 @@ interface MailComponentProps {
 
 export default function MailComponent({ nextstep, formData }: MailComponentProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-    const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
-        event.preventDefault();
+
+    const handleSubmit = async () => {
         console.log('Sending data: ', formData);
         const result = await registerUser(formData);
         if (result.success) {
@@ -58,7 +58,7 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
     useEffect(() => {
         if (count === 3) {
             nextstep(true);
-            handleSubmit({ preventDefault: () => { } } as SubmitEvent<HTMLFormElement>);
+            handleSubmit();
         }
     }, [count]);
 

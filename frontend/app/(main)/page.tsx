@@ -163,7 +163,7 @@ export default function HideAppBar() {
         <Grid container rowSpacing={1} columnSpacing={2} direction="row" wrap="nowrap" className="pt-8">
           <Grid size={{ xs: 6 }}>
             <Item>
-              <Typography sx={{ fontFamily: 'var(--font-custom)' }} variant="h3" component="div">
+              <Typography sx={{ fontFamily: 'var(--futura)' }} variant="h3" component="div">
                 EVENT <br /> MANAGEMENT
               </Typography>
             </Item>
@@ -171,7 +171,7 @@ export default function HideAppBar() {
 
           <Grid size={{ xs: 6 }} sx={{alignContent: 'center'}}>
             <Item>
-              <Typography sx={{ fontFamily: 'var(--font-custom)' }} variant="h4" component="div">
+              <Typography sx={{ fontFamily: 'var(--futura)' }} variant="h4" component="div">
                 Urmeaza la noi aici si crea un eveniment de visul tau
               </Typography>
             </Item>
