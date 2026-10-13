@@ -10,7 +10,7 @@ import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from 'next/image';
 import Slide from '@mui/material/Slide';
-import MailComponent from '../components/VerifyEmail';
+import MailComponent from './VerifyEmail';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -63,7 +63,7 @@ export default function UserForm() {
 
   const handleRole = (event: SelectChangeEvent) => {
     if (isVisible)
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+      setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -77,35 +77,35 @@ export default function UserForm() {
     setMail(true);
   };
 
-/*
-const handleSubmit = async (e: SubmitEvent) => {
-    e.preventDefault();
-    setAuthButton(true);
-    try {
-      const response = await fetch('http://localhost:4000/user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        alert('Ați înregistrat cu succes!');
-        setFormData({ username: '', email: '', role: '', password: '' }); // Clear form
+  /*
+  const handleSubmit = async (e: SubmitEvent) => {
+      e.preventDefault();
+      setAuthButton(true);
+      try {
+        const response = await fetch('http://localhost:4000/user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+  
+        if (response.ok) {
+          alert('Ați înregistrat cu succes!');
+          setFormData({ username: '', email: '', role: '', password: '' }); // Clear form
+        }
+        else {
+          console.error('Unspecified error occured: ', response);
+          setSnackbarOpen(true);
+          router.refresh();
+          router.push('/');
+        }
+      } catch (error) {
+        console.error('Error sending data: ', error);
+        setSnackbarOpen(true); // alert
+        setSlide(false); // debugging
+        setMail(true);
       }
-      else {
-        console.error('Unspecified error occured: ', response);
-        setSnackbarOpen(true);
-        router.refresh();
-        router.push('/');
-      }
-    } catch (error) {
-      console.error('Error sending data: ', error);
-      setSnackbarOpen(true); // alert
-      setSlide(false); // debugging
-      setMail(true);
-    }
-  };
-*/
+    };
+  */
 
   return (
     <ThemeProvider theme={theme}>
@@ -115,7 +115,7 @@ const handleSubmit = async (e: SubmitEvent) => {
         exit: 300,
       }} mountOnEnter unmountOnExit>
         <Container maxWidth="xs" sx={{
-          bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: 10
+          bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: 10, mb: 0
         }}>
           <Box component="form" ref={inputRef} onSubmit={handleSubmit} sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <Image
@@ -141,33 +141,33 @@ const handleSubmit = async (e: SubmitEvent) => {
                   <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required fullWidth />
                 </FormControl>
 
- <FormControl variant="outlined" fullWidth>
-          <InputLabel required htmlFor={`${outlinedPasswordId}-input`}>Password</InputLabel>
-          <OutlinedInput
-            id={`${outlinedPasswordId}-input`}
-            type={showPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label={
-                    showPassword ? 'hide the password' : 'display the password'
-                  }
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  onMouseUp={handleMouseUpPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-            value={formData.password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </FormControl>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel htmlFor={`${outlinedPasswordId}-input`}>Password</InputLabel>
+                  <OutlinedInput
+                    id={`${outlinedPasswordId}-input`}
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label={
+                            showPassword ? 'hide the password' : 'display the password'
+                          }
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          onMouseUp={handleMouseUpPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                    value={formData.password}
+                    name="password"
+                    onChange={handleChange}
+                    required
+                  />
+                </FormControl>
 
                 <FormControl fullWidth>
                   <FormControlLabel
@@ -205,7 +205,7 @@ const handleSubmit = async (e: SubmitEvent) => {
           </Box>
         </Container>
       </Slide>
-      {isMailSent ? <MailComponent nextstep={Verify} formData={formData}/> : <></>}
+      {isMailSent ? <MailComponent nextstep={Verify} formData={formData} /> : <></>}
     </ThemeProvider>
   );
 }
