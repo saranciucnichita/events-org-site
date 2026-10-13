@@ -23,6 +23,11 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Link from '@mui/material/Link';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
 
 const theme = createTheme({
   palette: {
@@ -199,9 +204,32 @@ export default function UserForm() {
                   </FormControl>
                 )}
               </Box>
-
             </FormGroup>
+  <Divider sx={{ width: '100%' }}>
+    <Chip label="or" size="small" />
+  </Divider>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: '100' }}>
+        <Button
+          fullWidth
+          variant="outlined"
+          onClick={() => alert('Continue with Google')}
+          startIcon={<GoogleIcon />}
+        >
+          Continue with Google
+        </Button>
+        <Button
+          fullWidth
+          variant="outlined"
+          onClick={() => alert('Continue with Facebook')}
+          startIcon={<FacebookIcon />}
+        >
+          Continue with Facebook
+        </Button>
+      </Box>
             <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
+            <Typography variant="caption">
+              By creating an account, you agree to the <Link href="#">EVENT Terms of Service</Link>. For more information about EVENT's privacy practices, see the <Link href="#">EVENT Privacy Statement</Link>.
+            </Typography>
           </Box>
         </Container>
       </Slide>

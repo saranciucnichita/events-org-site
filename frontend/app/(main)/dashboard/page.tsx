@@ -35,7 +35,7 @@ export default async function DashboardPage() {
       <div style={{ marginTop: '1rem', border: '1px solid #ccc', padding: '1rem' }}>
         <h3>Informațiile tale:</h3>
         <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Rol:</strong> {user.role || '-'}</p>
+        <p><strong>Rol:</strong> {user.role || 'client'}</p>
       </div>
     </div>
   );
