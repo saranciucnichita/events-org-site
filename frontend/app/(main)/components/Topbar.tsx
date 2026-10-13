@@ -1,3 +1,4 @@
+'use client';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,11 +13,11 @@ import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useState, ReactElement } from 'react';
 import { redirect } from 'next/navigation';
 
 interface Props {
-  children: React.ReactElement;
+  children: ReactElement;
 }
 
 const CustomAppBar = styled(AppBar)`
@@ -105,7 +106,7 @@ return (
               onClose={handleClose}
             >
               <MenuItem onClick={redirectLogin}>Profile</MenuItem>
-              <MenuItem onClick={redirectLogin}>My account</MenuItem>
+              <MenuItem onClick={redirectLogin}>Logout</MenuItem>
             </Menu>
 
           </Toolbar>

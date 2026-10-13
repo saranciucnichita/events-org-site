@@ -16,7 +16,7 @@ async function getUserProfile() {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    next: { revalidate: 0 }
+    cache: 'no-store'
   });
 
   if (!response.ok) {
