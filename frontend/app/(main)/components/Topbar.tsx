@@ -117,7 +117,7 @@ export default function TopBar() {
                 // minWidth: '48px'
               },
             }}>
-            <MenuItem onClick={redirectLogin}>
+            <MenuItem onClick={redirectLogin} divider>
               <ListItemIcon>
                 <ManageAccountsIcon fontSize='large' />
               </ListItemIcon>

@@ -19,6 +19,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import { EventOrganizationCard } from "./CardComponent";
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
+import Mail from '@mui/icons-material/Mail';
 
 const actions = [
   { icon: <CreateIcon />, name: 'Create event' },
@@ -60,7 +61,7 @@ export default function DashboardPage() {
                 </Typography>
                 <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{user.role || "Client"}</Typography>
                 <Typography variant="body2">
-                  {user.email}
+                  <Mail fontSize="small" /> {user.email}
                 </Typography>
               </CardContent>
               <CardActions>

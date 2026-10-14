@@ -148,7 +148,7 @@ export default function UserForm() {
                 </FormControl>
 
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel htmlFor={`${outlinedPasswordId}-input`}>Password</InputLabel>
+                  <InputLabel required htmlFor={`${outlinedPasswordId}-input`}>Password</InputLabel>
                   <OutlinedInput
                     id={`${outlinedPasswordId}-input`}
                     type={showPassword ? 'text' : 'password'}

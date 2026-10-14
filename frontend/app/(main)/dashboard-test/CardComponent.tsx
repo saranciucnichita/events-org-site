@@ -58,10 +58,10 @@ export const EventOrganizationCard: React.FC<EventCardProps> = ({
       sx={{ 
         maxWidth: 400, 
         borderRadius: 3,
-        transition: 'transform 0.2s, box-shadow 0.2s',
+        transition: 'transform 0.3s, box-shadow 0.2s',
         '&:hover': {
-          transform: 'translateY(-4px)',
-          boxShadow: 6,
+          transform: 'translateY(-1px)',
+          boxShadow: 4,
         },
       }}
       className='mx-7'
