@@ -15,6 +15,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useState, ReactElement } from 'react';
 import { redirect } from 'next/navigation';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
 interface Props {
   children: ReactElement;
@@ -41,7 +44,7 @@ function HideOnScroll({ children }: Props) {
 }
 
 export default function TopBar() {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [auth, setAuth] = useState(true);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -59,58 +62,77 @@ export default function TopBar() {
     setAnchorEl(null);
     redirect('/register');
   };
-return (
-      <HideOnScroll>
-        <CustomAppBar color="transparent">
-          <Toolbar>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h6" component="div">
-                EVENT
-              </Typography>
-            </Box>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={auth}
-                    onChange={handleChange}
-                    aria-label="login switch"
-                  />
-                }
-                label={auth ? 'Logout' : 'Login'}
-              />
-            </FormGroup>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleMenu}
-              sx={{ mr: 2 }}
-            >
-              <AccountCircle style={{ fontSize: 40 }} />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={redirectLogin}>Profile</MenuItem>
-              <MenuItem onClick={redirectLogin}>Logout</MenuItem>
-            </Menu>
+  return (
+    <HideOnScroll>
+      <CustomAppBar color="transparent">
+        <Toolbar>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div">
+              EVENT
+            </Typography>
+          </Box>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={auth}
+                  onChange={handleChange}
+                  aria-label="login switch"
+                />
+              }
+              label={auth ? 'Logout' : 'Login'}
+            />
+          </FormGroup>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={handleMenu}
+            sx={{ mr: 2 }}
+          >
+            <AccountCircle style={{ fontSize: 40 }} />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            sx={{
+              '& .MuiMenuItem-root': {
+                minHeight: 48,
+                fontSize: '1.2rem',
+              },
+              '& .MuiListItemIcon-root': {
+                marginRight: '16px',
+                // minWidth: '48px'
+              },
+            }}>
+            <MenuItem onClick={redirectLogin}>
+              <ListItemIcon>
+                <ManageAccountsIcon fontSize='large' />
+              </ListItemIcon>
+              Profile
+            </MenuItem>
+            <MenuItem disabled onClick={redirectLogin}>
+              <ListItemIcon>
+                <LogoutIcon fontSize='large' />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </Menu>
 
-          </Toolbar>
-        </CustomAppBar>
-      </HideOnScroll>
-);
+        </Toolbar>
+      </CustomAppBar>
+    </HideOnScroll>
+  );
 }

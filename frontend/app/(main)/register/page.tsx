@@ -119,8 +119,9 @@ export default function UserForm() {
         enter: 0,
         exit: 300,
       }} mountOnEnter unmountOnExit>
+
         <Container maxWidth="xs" sx={{
-          bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: 10, mb: 0
+          bgcolor: 'white', borderRadius: 2, boxShadow: 4, p: 4, my: { sm: 2.5, md: 4, lg: 5 }
         }}>
           <Box component="form" ref={inputRef} onSubmit={handleSubmit} sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <Image
@@ -182,7 +183,7 @@ export default function UserForm() {
                         onChange={handleToggle}
                       />
                     }
-                    label="Eu sunt un membru a companiei"
+                    label="Eu sunt un angajator"
                   />
                 </FormControl>
 
@@ -205,30 +206,30 @@ export default function UserForm() {
                 )}
               </Box>
             </FormGroup>
-  <Divider sx={{ width: '100%' }}>
-    <Chip label="or" size="small" />
-  </Divider>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: '100' }}>
-        <Button
-          fullWidth
-          variant="outlined"
-          onClick={() => alert('Continue with Google')}
-          startIcon={<GoogleIcon />}
-        >
-          Continue with Google
-        </Button>
-        <Button
-          fullWidth
-          variant="outlined"
-          onClick={() => alert('Continue with Facebook')}
-          startIcon={<FacebookIcon />}
-        >
-          Continue with Facebook
-        </Button>
-      </Box>
+            <Divider sx={{ width: '100%' }}>
+              <Chip label="or" size="small" />
+            </Divider>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: '100' }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={() => alert('Continue with Google')}
+                startIcon={<GoogleIcon />}
+              >
+                Continue with Google
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={() => alert('Continue with Facebook')}
+                startIcon={<FacebookIcon />}
+              >
+                Continue with Facebook
+              </Button>
+            </Box>
             <Button type="submit" variant="contained" color="primary" fullWidth disabled={authButton}>Înregistrare</Button>
             <Typography variant="caption">
-              By creating an account, you agree to the <Link href="#">EVENT Terms of Service</Link>. For more information about EVENT's privacy practices, see the <Link href="#">EVENT Privacy Statement</Link>.
+              By creating an account, you agree to the <Link href="#">EVENT Terms of Service</Link>. For more information about EVENT{"'"}s privacy practices, see the <Link href="#">EVENT Privacy Statement</Link>.
             </Typography>
           </Box>
         </Container>

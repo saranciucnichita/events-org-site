@@ -31,16 +31,17 @@ export default function Footer() {
     ];
 
     return (
-        <>
+        <>  {/* color transition */}
             <Box
                 sx={{
                     background: 'linear-gradient(to bottom, #ffffff, #f9f2f8)',
-                    height: '50px',
+                    height: '20px',
                 }}
             />
+
             <Stack direction={{ xs: 'column', sm: 'row' }}
                 sx={{ justifyContent: "space-evenly", alignItems: "flex-start", backgroundColor: "#f9f2f8" }}>
-                <Box sx={{ display: 'grid', justifyItems: 'start', gap: 2, p: { xs: 1, md: 2, lg: 2 } }}>
+                <Box sx={{ display: 'grid', justifyItems: 'start', gap: 1, p: { sm: 0.5, md: 1, xs: 1, lg: 2 } }}>
                     <Typography variant="h5" component="div">
                         News
                     </Typography>
@@ -65,18 +66,18 @@ export default function Footer() {
                     <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{ input: { color: 'common.black' } }} />
                 </Box>
             </Stack>
-
+            {/* color transition */}
             <Box
                 sx={{
                     background: 'linear-gradient(to bottom, #f9f2f8, #fceffa)',
-                    height: '30px',
+                    height: '20px',
                 }}
             />
             <Box
                 component="footer"
                 sx={{
-                    py: 1,
-                    px: 1,
+                    py: 0.5,
+                    px: 0.5,
                     my: 0,
                     backgroundColor: '#fceffa',
                     color: 'common.black',
@@ -105,7 +106,7 @@ export default function Footer() {
                         </Link>{' '}
                         {'2026'}
 
-                        <div>Fonts made from <a href="http://www.onlinewebfonts.com">Web Fonts</a> is licensed by CC BY 4.0</div>
+                        <div>Fonts made from <a href="http://www.onlinewebfonts.com">Web Fonts</a> are licensed by CC BY 4.0</div>
                     </Typography>
                 </Container>
             </Box>

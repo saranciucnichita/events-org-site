@@ -1,5 +1,4 @@
 "use client";
-import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -7,7 +6,6 @@ import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
 import Footer from '../(main)/components/Footer';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';

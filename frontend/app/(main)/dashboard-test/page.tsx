@@ -12,12 +12,13 @@ import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import CreateIcon from '@mui/icons-material/Create';
 import { EventOrganizationCard } from "./CardComponent";
+import Avatar from '@mui/material/Avatar';
+import Grid from '@mui/material/Grid';
 
 const actions = [
   { icon: <CreateIcon />, name: 'Create event' },
@@ -27,73 +28,80 @@ const actions = [
 ];
 
 export default function DashboardPage() {
-const user = {
+  const user = {
     username: 'Nichita',
     email: 'nichita@google.com',
     role: 'Admin'
-}
+  }
 
-const theme = createTheme({
-  palette: {
-    background: {
-      default: blueGrey['50'],
+  const theme = createTheme({
+    palette: {
+      background: {
+        default: blueGrey['50'],
+      },
     },
-  },
-});
+  });
 
   return (
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-    
-  <TopBar />
-<Box sx={{ padding: '2rem', marginTop: '64px' }}> 
-    <Card sx={{ maxWidth: 275, mx: 'auto' }}>
-      <CardContent>
-        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-          User:
-        </Typography>
-        <Typography variant="h5" component="div">
-          {user.username}
-        </Typography>
-        <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{user.role || "Client"}</Typography>
-        <Typography variant="body2">
-        {user.email}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Details</Button>
-        <Button size="small">Modify profile</Button>
-      </CardActions>
-    </Card>
-    </Box>
-<EventOrganizationCard 
-   category="Конференция"
-   town="Кишинёв"
-   name="Tech Motivation Summit 2026"
-   startTime="25 Октября 2026, 10:00"
-   duration="8 часов"
-   status="confirmed"
-   estimatedBudget={15000}
- />
-<Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
-      >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            slotProps={{
-              tooltip: {
-                title: action.name,
-              },
-            }}
-          />
-        ))}
-      </SpeedDial>
-    </Box>
+
+      <TopBar />
+      <Box sx={{ padding: '2rem', marginTop: '64px' }}>
+        <Card sx={{ maxWidth: 275, mx: 'auto' }}>
+          <Grid container>
+            <Grid>
+              <CardContent>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+                  User:
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {user.username}
+                </Typography>
+                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{user.role || "Client"}</Typography>
+                <Typography variant="body2">
+                  {user.email}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small">Details</Button>
+                <Button size="small">Modify profile</Button>
+              </CardActions>
+            </Grid>
+            <Grid>
+              <Avatar alt="Remy Sharp" src="/avatar.jpg" sx={{ width: 56, height: 56, mt: 1.5 }} />
+            </Grid>
+          </Grid>
+        </Card>
+      </Box>
+      <EventOrganizationCard
+        category="Конференция"
+        town="Кишинёв"
+        name="Tech Motivation Summit 2026"
+        startTime="25 Октября 2026, 10:00"
+        duration="8 часов"
+        status="confirmed"
+        estimatedBudget={15000}
+      />
+      <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: 'absolute', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              slotProps={{
+                tooltip: {
+                  title: action.name,
+                },
+              }}
+            />
+          ))}
+        </SpeedDial>
+      </Box>
     </ThemeProvider>
-);
+  );
 }
