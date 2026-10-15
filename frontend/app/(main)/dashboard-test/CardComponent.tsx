@@ -49,7 +49,7 @@ export const EventOrganizationCard: React.FC<EventCardProps> = ({
   duration,
   status,
   estimatedBudget,
-}) => {
+}: EventCardProps) => {
   const statusConfig = getStatusConfig(status);
 
   return (

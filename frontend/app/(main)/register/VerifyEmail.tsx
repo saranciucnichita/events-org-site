@@ -23,18 +23,6 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [errormessage, setErrMsg] = useState<string>('');
 
-    const handleSubmit = async () => {
-        console.log('Sending data: ', formData);
-        const result = await registerUser(formData);
-        if (result.success) {
-            redirect('/dashboard');
-        } else {
-            setErrMsg(result.error.message);
-            setSnackbarOpen(true);
-            console.error(result.error);
-        }
-    };
-
     const [authStatus, setAuthStatus] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const stop = count === 3;
@@ -43,20 +31,27 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
     const progressValue = count === 2 ? progress : 0;
     const router = useRouter();
 
+    /* Simulate sending link to email, set artificial timer */
     useEffect(() => {
-        if (stop) return;
-        const interval = setInterval(() => {
-            setCount((prevCount) => prevCount + 1);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [stop]);
-
-    useEffect(() => {
-        if (count === 3) {
-            nextstep(true);
-            handleSubmit();
+        if (stop) {
+            (async () => {
+                console.log('Sending data: ', formData);
+                const result = await registerUser(formData);
+                if (result.success) {
+                    redirect('/dashboard');
+                } else {
+                    setErrMsg(result.error.message);
+                    setSnackbarOpen(true);
+                    console.error(result.error);
+                }
+            })();
+        } else {
+            const interval = setInterval(() => {
+                setCount((prevCount: number) => prevCount + 1);
+            }, 750);
+            return () => clearInterval(interval);
         }
-    }, [count]);
+    }, [formData, stop]);
 
     return (
         <Slide direction="left" in={authStatus} timeout={{
