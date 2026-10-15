@@ -1,6 +1,18 @@
 // app/dashboard/page.tsx (Next.js Server Component)
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import TopBar from '../components/Topbar';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Grid from '@mui/material/Grid';
+import Mail from '@mui/icons-material/Mail';
+
+export const instant = false;
 
 async function getUserProfile() {
   const cookieStore = await cookies();
@@ -30,13 +42,35 @@ export default async function DashboardPage() {
   const user = await getUserProfile();
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Bun venit în panoul de control, {user.username}!</h1>
-      <div style={{ marginTop: '1rem', border: '1px solid #ccc', padding: '1rem' }}>
-        <h3>Informațiile tale:</h3>
-        <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Rol:</strong> {user.role || 'client'}</p>
-      </div>
-    </div>
+    <>
+    <TopBar />
+    <Box sx={{ padding: '2rem', marginTop: '64px' }}>
+      <Card sx={{ maxWidth: 275, mx: 'auto' }}>
+        <Grid container>
+          <Grid>
+            <CardContent>
+              <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+                User:
+              </Typography>
+              <Typography variant="h5" component="div">
+                {user.username}
+              </Typography>
+              <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{user.role || "Client"}</Typography>
+              <Typography variant="body2">
+                <Mail fontSize="small" /> {user.email}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Details</Button>
+              <Button size="small">Modify profile</Button>
+            </CardActions>
+          </Grid>
+          <Grid>
+            <Avatar alt="Remy Sharp" src="/avatar.jpg" sx={{ width: 56, height: 56, mt: 1.5 }} />
+          </Grid>
+        </Grid>
+      </Card>
+    </Box>
+    </>
   );
 }

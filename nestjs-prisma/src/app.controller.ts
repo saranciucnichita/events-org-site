@@ -6,6 +6,7 @@ import { Request, UnauthorizedException } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service.js";
 import { hash } from 'bcrypt';
+import { UpdateUserDto } from "./updateuser.dto.js";
 
 @Controller()
 export class AppController {
@@ -70,5 +71,13 @@ export class AppController {
       delete (user as any).password;
     }
     return user;
+  }
+
+  @Put("update/:id")
+  async updateUser(@Param("id") id: string, @Body() updateuser: UpdateUserDto ): Promise<UserModel> {
+    return this.UserService.updateUser({
+      where: { id: Number(id) },
+      data: updateuser,
+    });
   }
 }

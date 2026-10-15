@@ -71,18 +71,6 @@ export default function TopBar() {
               EVENT
             </Typography>
           </Box>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={auth}
-                  onChange={handleChange}
-                  aria-label="login switch"
-                />
-              }
-              label={auth ? 'Logout' : 'Login'}
-            />
-          </FormGroup>
           <IconButton
             size="large"
             edge="start"

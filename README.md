@@ -14,6 +14,9 @@ Unset:
 git config --global --unset user.name
 git config --global --unset user.email
 ```
+Commands:
+curl -X POST -H "Content-Type: application/json" -d '{"username": "nichita", "password": "abc", "role": "client", "email": "abc@mail.com"}' 127.0.0.1:4000/user
+curl -X PUT -H "Content-Type: application/json" -d '{"username": "sergiu"}' 127.0.0.1:4000/update/1
 
 Inspired by:
 [Summit Events](https://summit.md/en/event-management/)
