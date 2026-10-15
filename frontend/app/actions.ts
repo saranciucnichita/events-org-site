@@ -29,11 +29,12 @@ export async function registerUser(formData: registerProps) {
 
       return { success: true };
     }
-
+    const err = await response.json();
     console.error('Server error response:', response.status);
-    return { success: false, error: 'Unspecified error occurred' };
+    return { success: false, error: err };
+
   } catch (error) {
     console.error('Network error on server:', error);
-    return { success: false, error: 'Network error' };
+    return { success: false, error: error };
   }
 }

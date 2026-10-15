@@ -21,6 +21,7 @@ interface MailComponentProps {
 
 export default function MailComponent({ nextstep, formData }: MailComponentProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const [errormessage, setErrMsg] = useState<string>('');
 
     const handleSubmit = async () => {
         console.log('Sending data: ', formData);
@@ -28,14 +29,9 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
         if (result.success) {
             redirect('/dashboard');
         } else {
+            setErrMsg(result.error.message);
             setSnackbarOpen(true);
-            if (result.error === 'Unspecified error occurred') {
-                router.refresh();
-                router.push('/');
-            }/* else {
-      setSlide(false); // debugging
-      setMail(true);
-    } */
+            console.error(result.error);
         }
     };
 
@@ -79,7 +75,7 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
                 <LinearProgress aria-label="Loading…" variant={variant} value={progressValue} />
                 <CustomizedSnackbar
                     open={snackbarOpen}
-                    message="Înregistrare nu reușit!"
+                    message={errormessage}
                     severity="error"
                     onClose={() => setSnackbarOpen(false)}
                 />

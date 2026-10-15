@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, ConflictException } from "@nestjs/common";
 import { PrismaService } from "./prisma.service.js";
 import { User, Prisma } from "./generated/prisma/client.js";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async user(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User | null> {
     return this.prisma.user.findUnique({
@@ -30,9 +30,23 @@ export class UserService {
   }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
-    });
+    try {
+      return await this.prisma.user.create({
+        data,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          console.log(
+            "There is a unique constraint violation, a new user cannot be created with this data",
+          );
+          throw new ConflictException(
+            'User already exists. Please, use other username or email.',
+          );
+        }
+      }
+      throw e;
+    }
   }
 
   async updateUser(params: {

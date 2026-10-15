@@ -9,5 +9,6 @@ export class UpdateUserDto {
   email: string;
 
   @IsOptional()
+  @IsString()
   role?: string;
 }
