@@ -8,9 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useState, ReactElement } from 'react';
@@ -45,10 +42,6 @@ function HideOnScroll({ children }: Props) {
 
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [auth, setAuth] = useState(true);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,7 +53,7 @@ export default function TopBar() {
 
   const redirectLogin = () => {
     setAnchorEl(null);
-    redirect('/register');
+    redirect('/login');
   };
   return (
     <HideOnScroll>

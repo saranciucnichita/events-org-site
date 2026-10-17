@@ -2,7 +2,17 @@
   "compilerOptions": {
     "target": "ES2025",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,

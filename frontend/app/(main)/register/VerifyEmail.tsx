@@ -1,8 +1,7 @@
 'use client';
-import { useState, useEffect, SubmitEvent, Dispatch, SyntheticEvent } from 'react';
+import { useState, useEffect, Dispatch} from 'react';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useRouter } from 'next/navigation';
 import Slide from '@mui/material/Slide';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import { registerUser } from '../../actions';
@@ -29,7 +28,6 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
     const variant = count === 2 ? "determinate" : "indeterminate";
     const [progress, setProgress] = useState<LinearProgressProps['value']>(100);
     const progressValue = count === 2 ? progress : 0;
-    const router = useRouter();
 
     /* Simulate sending link to email, set artificial timer */
     useEffect(() => {
@@ -45,6 +43,7 @@ export default function MailComponent({ nextstep, formData }: MailComponentProps
                     console.error(result.error);
                 }
             })();
+            return;
         } else {
             const interval = setInterval(() => {
                 setCount((prevCount: number) => prevCount + 1);

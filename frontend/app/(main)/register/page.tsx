@@ -49,7 +49,7 @@ export default function UserForm() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword = () => setShowPassword((show: boolean) => !show);
 
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
