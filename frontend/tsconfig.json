@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2025",
-    "lib": ["dom", "dom.iterable", "esnext"],
-
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
@@ -12,7 +15,6 @@
     "strictPropertyInitialization": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
-
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -29,8 +31,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowJs": true
   },
   "include": [
     "next-env.d.ts",
@@ -40,5 +45,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

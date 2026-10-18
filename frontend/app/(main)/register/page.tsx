@@ -28,6 +28,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
+import { styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 
 const theme = createTheme({
   palette: {
@@ -37,10 +39,32 @@ const theme = createTheme({
   },
 });
 
+const WrappedLabel = styled(InputBase)(({ theme }) => ({
+  'label + &': {
+    marginTop: theme.spacing(3),
+  },
+  '& .MuiInputBase-input': {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: (theme.vars ?? theme).palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '16.5px 26px 16.5px 12px', 
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}));
+
+const locations = ['Balti', 'Chisinau', 'Drochia'];
+
 export default function UserForm() {
   const outlinedPasswordId = useId();
 
-  const [formData, setFormData] = useState({ username: '', email: '', role: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', email: '', role: '', password: '', location: '' });
   const [authButton, setAuthButton] = useState<boolean>(true);
   const [isMailSent, setMail] = useState<boolean>(false);
   const [isMailVerified, Verify] = useState<boolean>(false);
@@ -69,6 +93,10 @@ export default function UserForm() {
   const handleRole = (event: SelectChangeEvent) => {
     if (isVisible)
       setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const handleLocation = (event: SelectChangeEvent) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -175,6 +203,25 @@ export default function UserForm() {
                   />
                 </FormControl>
 
+                <FormControl fullWidth variant="standard">
+                  <InputLabel id="location-select-label" shrink>Locatia</InputLabel>
+                  <Select
+                    name="location"
+                    labelId="location-select-label"
+                    id="location-select"
+                    value={formData.location}
+                    onChange={handleLocation}
+                    input={<WrappedLabel fullWidth/>}
+                  >
+                    <MenuItem value="">
+                      <em>Unknown</em>
+                    </MenuItem>
+                    {locations.map((item) => (
+                      <MenuItem key={item} value={item}>{item}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
                 <FormControl fullWidth>
                   <FormControlLabel
                     control={
@@ -183,7 +230,7 @@ export default function UserForm() {
                         onChange={handleToggle}
                       />
                     }
-                    label="Eu sunt un angajator"
+                    label="Eu sunt un angajat"
                   />
                 </FormControl>
 
@@ -233,8 +280,8 @@ export default function UserForm() {
             </Typography>
           </Box>
         </Container>
-      </Slide>
+      </Slide >
       {isMailSent ? <MailComponent nextstep={Verify} formData={formData} /> : <></>}
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
