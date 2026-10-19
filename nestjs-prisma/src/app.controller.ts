@@ -7,12 +7,14 @@ import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service.js";
 import { hash } from 'bcrypt';
 import { UpdateUserDto } from "./updateuser.dto.js";
+import { LocationService } from "./location.service.js";
 
 @Controller()
 export class AppController {
   constructor(
     private readonly UserService: UserService,
     private readonly AuthService: AuthService,
+    private readonly LocationService: LocationService,
   ) { }
 
   @Get("user/:id")
@@ -49,14 +51,21 @@ export class AppController {
   }
 
   @Post("user")
-  async signupUser(@Body() userData: { username: string; email: string, role?: string, password: string }): Promise<any> {
+  async signupUser(@Body() userData: { username: string; email: string, role?: string, password: string, locationId?: Number }): Promise<any> {
     const saltRounds = 10;
     const hashedPassword = await hash(userData.password, saltRounds);
     const newUser = await this.UserService.createUser({
         ...userData,
         password: hashedPassword,
       });
+      if (newUser) {
       return this.AuthService.login(newUser);
+      }
+  }
+
+  @Post("location")
+  async signupLocation(@Body() location: { name: string }): Promise<any> {
+      return this.LocationService.add(location);
   }
 
   @UseGuards(AuthGuard('jwt'))

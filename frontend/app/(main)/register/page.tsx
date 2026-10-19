@@ -59,7 +59,7 @@ const WrappedLabel = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const locations = ['Balti', 'Chisinau', 'Drochia'];
+const locations = ['mun. Chișinău', 'mun. Bălți', 'mun. Comrat', 'reg. Nord', 'reg. Centru', 'reg. Sud', 'UTA Găgăuzia'];
 
 export default function UserForm() {
   const outlinedPasswordId = useId();
