@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useId, ChangeEvent, SubmitEvent, MouseEvent } from 'react';
+import { useState, useEffect, useRef, useId, ChangeEvent, SubmitEvent, MouseEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -30,6 +30,8 @@ import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { form } from "../components/FormDataInterface";
+import { getLocations } from "../../actions";
 
 const theme = createTheme({
   palette: {
@@ -38,6 +40,11 @@ const theme = createTheme({
     },
   },
 });
+
+interface Location {
+    id: number;
+    name: string;
+}
 
 const WrappedLabel = styled(InputBase)(({ theme }) => ({
   'label + &': {
@@ -59,15 +66,38 @@ const WrappedLabel = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const locations = ['mun. Chișinău', 'mun. Bălți', 'mun. Comrat', 'reg. Nord', 'reg. Centru', 'reg. Sud', 'UTA Găgăuzia'];
 
 export default function UserForm() {
   const outlinedPasswordId = useId();
 
-  const [formData, setFormData] = useState({ username: '', email: '', role: '', password: '', location: '' });
+  const [formData, setFormData] = useState<form>({
+    username: "",
+    email: "",
+    role: "",
+    password: "",
+    locationId: "",
+  });
+
+const [disabledId, setDisabledId] = useState("");
+const [locations, setLocations] = useState<Location[]>([]);
+
+    useEffect(() => {
+        const fetchLocations = async () => {
+            const result = await getLocations();
+            if (result.success) {
+                setLocations(result.data || []); 
+            } else {
+                console.error(result.error);
+                setDisabledId("location-select");
+            }
+        };
+
+        fetchLocations();
+    }, []);
+
   const [authButton, setAuthButton] = useState<boolean>(true);
   const [isMailSent, setMail] = useState<boolean>(false);
-  const [isMailVerified, Verify] = useState<boolean>(false);
+  const [isMailVerified, VerifyEmail] = useState<boolean>(false);
   const [slide, setSlide] = useState<boolean>(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -90,13 +120,17 @@ export default function UserForm() {
     }
   };
 
-  const handleRole = (event: SelectChangeEvent) => {
+  const handleRole = (event: SelectChangeEvent<string>) => {
     if (isVisible)
       setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleLocation = (event: SelectChangeEvent) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+  const handleLocation = (event: SelectChangeEvent<number | string>) => {
+    const value = event.target.value;
+     setFormData({
+      ...formData,
+      locationId: value ? Number(value) : "",
+    });
   };
 
   const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -209,15 +243,16 @@ export default function UserForm() {
                     name="location"
                     labelId="location-select-label"
                     id="location-select"
-                    value={formData.location}
+                    value={formData.locationId}
                     onChange={handleLocation}
                     input={<WrappedLabel fullWidth/>}
+                    disabled={disabledId.includes("location-select")}
                   >
                     <MenuItem value="">
                       <em>Unknown</em>
                     </MenuItem>
                     {locations.map((item) => (
-                      <MenuItem key={item} value={item}>{item}</MenuItem>
+                      <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -281,7 +316,9 @@ export default function UserForm() {
           </Box>
         </Container>
       </Slide >
-      {isMailSent ? <MailComponent nextstep={Verify} formData={formData} /> : <></>}
-    </ThemeProvider >
+      {isMailSent ? (<MailComponent trigger={VerifyEmail} formData={formData} />) : (
+        <></>
+      )}
+    </ThemeProvider>
   );
 }

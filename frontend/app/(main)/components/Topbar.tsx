@@ -1,20 +1,20 @@
-'use client';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import { styled } from '@mui/material/styles';
-import Slide from '@mui/material/Slide';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { useState, ReactElement } from 'react';
-import { redirect } from 'next/navigation';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import ListItemIcon from '@mui/material/ListItemIcon';
+"use client";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import { styled } from "@mui/material/styles";
+import Slide from "@mui/material/Slide";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { useState, ReactElement } from "react";
+import { redirect } from "next/navigation";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import ListItemIcon from "@mui/material/ListItemIcon";
 
 interface Props {
   children: ReactElement;
@@ -53,7 +53,7 @@ export default function TopBar() {
 
   const redirectLogin = () => {
     setAnchorEl(null);
-    redirect('/login');
+    redirect("/login");
   };
   return (
     <HideOnScroll>
@@ -78,40 +78,40 @@ export default function TopBar() {
             id="menu-appbar"
             anchorEl={anchorEl}
             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             keepMounted
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             open={Boolean(anchorEl)}
             onClose={handleClose}
             sx={{
-              '& .MuiMenuItem-root': {
+              "& .MuiMenuItem-root": {
                 minHeight: 48,
-                fontSize: '1.2rem',
+                fontSize: "1.2rem",
               },
-              '& .MuiListItemIcon-root': {
-                marginRight: '16px',
+              "& .MuiListItemIcon-root": {
+                marginRight: "16px",
                 // minWidth: '48px'
               },
-            }}>
+            }}
+          >
             <MenuItem onClick={redirectLogin} divider>
               <ListItemIcon>
-                <ManageAccountsIcon fontSize='large' />
+                <ManageAccountsIcon fontSize="large" />
               </ListItemIcon>
               Profile
             </MenuItem>
             <MenuItem disabled onClick={redirectLogin}>
               <ListItemIcon>
-                <LogoutIcon fontSize='large' />
+                <LogoutIcon fontSize="large" />
               </ListItemIcon>
               Logout
             </MenuItem>
           </Menu>
-
         </Toolbar>
       </CustomAppBar>
     </HideOnScroll>

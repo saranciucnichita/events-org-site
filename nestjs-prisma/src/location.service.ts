@@ -1,18 +1,20 @@
-import { Injectable, ConflictException } from "@nestjs/common";
-import { PrismaService } from "./prisma.service.js";
-import { Location, Prisma } from "./generated/prisma/client.js";
+import { Injectable, ConflictException } from '@nestjs/common';
+import { PrismaService } from './prisma.service.js';
+import { Location, Prisma } from './generated/prisma/client.js';
 
 @Injectable()
 export class LocationService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-  async Location(LocationWhereUniqueInput: Prisma.LocationWhereUniqueInput): Promise<Location | null> {
+  async location(
+    LocationWhereUniqueInput: Prisma.LocationWhereUniqueInput,
+  ): Promise<Location | null> {
     return this.prisma.location.findUnique({
       where: LocationWhereUniqueInput,
     });
   }
 
-  async Locations(params: {
+  async locations(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.LocationWhereUniqueInput;
@@ -36,9 +38,9 @@ export class LocationService {
       });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
-        if (e.code === "P2002") {
+        if (e.code === 'P2002') {
           console.log(
-            "There is a unique constraint violation, a new location cannot be added with this data",
+            'There is a unique constraint violation, a new location cannot be added with this data',
           );
           throw new ConflictException(
             'Location already exists. Please, add other location.',
@@ -60,7 +62,9 @@ export class LocationService {
     });
   }
 
-  async deleteLocation(where: Prisma.LocationWhereUniqueInput): Promise<Location> {
+  async deleteLocation(
+    where: Prisma.LocationWhereUniqueInput,
+  ): Promise<Location> {
     return this.prisma.location.delete({
       where,
     });

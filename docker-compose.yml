@@ -1,7 +1,7 @@
 services:
   db:
     container_name: event-db
-    image: mariadb:13.0
+    image: mariadb:12.3
     restart: always # Automatically restarts the container if it fails or if Docker restarts
     ports:
       - "3306:3306"
@@ -10,6 +10,7 @@ services:
       MYSQL_DATABASE: event-db
     # volumes:
     #  - db_data:/var/lib/mysql
+    command: --innodb-use-native-aio=0
 
 # volumes:
 #  db_data: # Declares the named volume used by the database service

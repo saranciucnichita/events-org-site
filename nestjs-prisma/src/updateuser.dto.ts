@@ -3,10 +3,10 @@ import { Type } from 'class-transformer';
 
 export class UpdateUserDto {
   @IsString()
-  username: string = "";
+  username: string = '';
 
   @IsString()
-  email: string = "";
+  email: string = '';
 
   @IsOptional()
   @IsString()
