@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,14 +10,20 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, useEffect } from "react";
 import { redirect } from "next/navigation";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 interface Props {
   children: ReactElement;
+}
+
+interface BarProps {
+  LoggedIn?: boolean;
 }
 
 const CustomAppBar = styled(AppBar)`
@@ -40,7 +46,7 @@ function HideOnScroll({ children }: Props) {
   );
 }
 
-export default function TopBar() {
+export default function TopBar({LoggedIn}: BarProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -54,6 +60,21 @@ export default function TopBar() {
   const redirectLogin = () => {
     setAnchorEl(null);
     redirect("/login");
+  };
+
+  const purgeCookie = () => {
+    setAnchorEl(null);
+ useEffect(() => {
+      const cookieStore = (async () => {
+        await cookies();
+      })();
+  const token = cookieStore.get("auth_token")?.value;
+
+  if (!token) {
+    redirect("/login");
+  }
+    }, []);
+    redirect("/");
   };
   return (
     <HideOnScroll>
@@ -105,7 +126,7 @@ export default function TopBar() {
               </ListItemIcon>
               Profile
             </MenuItem>
-            <MenuItem disabled onClick={redirectLogin}>
+            <MenuItem disabled={!LoggedIn} onClick={purgeCookie}>
               <ListItemIcon>
                 <LogoutIcon fontSize="large" />
               </ListItemIcon>

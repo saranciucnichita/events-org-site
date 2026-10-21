@@ -43,7 +43,7 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <TopBar />
+      <TopBar LoggedIn />
       <Box sx={{ padding: "2rem", marginTop: "64px" }}>
         <Card sx={{ maxWidth: 275, mx: "auto" }}>
           <Grid container>
