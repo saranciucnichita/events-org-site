@@ -8,15 +8,15 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useState, ReactElement, useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useState, ReactElement } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import Image from "next/image";
+import logo from "/public/EVENT logo.svg";
+import Link from "next/link";
 
 interface Props {
   children: ReactElement;
@@ -46,7 +46,7 @@ function HideOnScroll({ children }: Props) {
   );
 }
 
-export default function TopBar({LoggedIn}: BarProps) {
+export default function TopBar({ LoggedIn }: BarProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,33 +57,33 @@ export default function TopBar({LoggedIn}: BarProps) {
     setAnchorEl(null);
   };
 
-  const redirectLogin = () => {
+  const redirectProfile = () => {
     setAnchorEl(null);
-    redirect("/login");
+    redirect("/dashboard");
   };
 
   const purgeCookie = () => {
     setAnchorEl(null);
- useEffect(() => {
-      const cookieStore = (async () => {
-        await cookies();
-      })();
-  const token = cookieStore.get("auth_token")?.value;
-
-  if (!token) {
-    redirect("/login");
-  }
-    }, []);
-    redirect("/");
+    redirect("/logout");
   };
+
   return (
     <HideOnScroll>
       <CustomAppBar color="transparent">
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="h6" component="div">
-              EVENT
-            </Typography>
+            <Link href="/">
+              <Image
+                src={logo}
+                sizes="10vw"
+                alt="EVENT Company logo"
+                style={{
+                  width: "5%",
+                  height: "auto",
+                }}
+                loading="eager"
+              />
+            </Link>
           </Box>
           <IconButton
             size="large"
@@ -120,7 +120,7 @@ export default function TopBar({LoggedIn}: BarProps) {
               },
             }}
           >
-            <MenuItem onClick={redirectLogin} divider>
+            <MenuItem onClick={redirectProfile} divider>
               <ListItemIcon>
                 <ManageAccountsIcon fontSize="large" />
               </ListItemIcon>

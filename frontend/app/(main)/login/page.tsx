@@ -16,6 +16,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Image from "next/image";
+import logo from "/public/EVENT logo.svg";
 import Slide from "@mui/material/Slide";
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
@@ -43,8 +44,6 @@ export default function UserForm() {
 
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
-    role: "",
     password: "",
   });
   const [loginButton, setLoginButton] = useState<boolean>(true);
@@ -119,15 +118,15 @@ export default function UserForm() {
             }}
           >
             <Image
-              src="/logo.png"
-              width={300}
-              height={300}
-              alt="Picture of the event promotion"
+              src={logo}
+              sizes="100vw"
+              alt="EVENT Company logo"
               style={{
                 objectFit: "cover",
                 margin: "auto",
+                width: "100%",
+                height: "auto",
               }}
-              className="w-auto h-auto"
               loading="eager"
             />
             <Typography variant="h5">Intra in cont</Typography>

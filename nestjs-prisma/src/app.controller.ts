@@ -17,6 +17,7 @@ import { AuthService } from './auth.service.js';
 import { hash } from 'bcrypt';
 import { UpdateUserDto } from './updateuser.dto.js';
 import { LocationService } from './location.service.js';
+import { CreateUserDto } from './createuser.dto.js';
 
 @Controller()
 export class AppController {
@@ -67,13 +68,7 @@ export class AppController {
   @Post('user')
   async signupUser(
     @Body()
-    userData: {
-      username: string;
-      email: string;
-      role?: string;
-      password: string;
-      locationId?: Number;
-    },
+    userData: CreateUserDto,
   ): Promise<any> {
     const saltRounds = 10;
     const hashedPassword = await hash(userData.password, saltRounds);

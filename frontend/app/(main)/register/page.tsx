@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from 'next/image';
+import logo from "/public/EVENT logo.svg";
 import Slide from '@mui/material/Slide';
 import MailComponent from './VerifyEmail';
 import Switch from '@mui/material/Switch';
@@ -89,6 +90,7 @@ const [locations, setLocations] = useState<Location[]>([]);
             } else {
                 console.error(result.error);
                 setDisabledId("location-select");
+                
             }
         };
 
@@ -187,15 +189,15 @@ const [locations, setLocations] = useState<Location[]>([]);
         }}>
           <Box component="form" ref={inputRef} onSubmit={handleSubmit} sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <Image
-              src="/logo.png"
-              width={300}
-              height={300}
-              alt="Picture of the event promotion"
+              src={logo}
+              sizes="100vw"
+              alt="EVENT Company logo"
               style={{
                 objectFit: "cover",
                 margin: "auto",
+                width: '100%',
+                height: 'auto',
               }}
-              className="w-auto h-auto"
               loading="eager"
             />
             <Typography variant="h5">Creați cont nou</Typography>
